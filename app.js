@@ -6,6 +6,15 @@ app.use(express.cookieParser());
 app.use(express.session({secret:'sea-anemone'}));
 app.set('views', __dirname + '/views');
 
+var server = require("http").createServer(app)
+var io = require("socket.io").listen(server);
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 
 app.get("/", function(req, res) {
@@ -19,7 +28,6 @@ app.all('*', function(req, res, next) {
  });
 
 app.get("/bla", function(req, res) {
-	
 	res.json({
 		"players": [
 			{name:"jakob"}, 
@@ -28,4 +36,4 @@ app.get("/bla", function(req, res) {
 	});
 })
 
-app.listen(3000)
+server.listen(3000)

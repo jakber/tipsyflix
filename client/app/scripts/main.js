@@ -17,7 +17,8 @@ require.config({
     paths: {
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone/backbone',
-        underscore: '../bower_components/underscore/underscore'
+        underscore: '../bower_components/underscore/underscore',
+        socketio: '../bower_components/socket.io-client/dist/socket.io.min'
     }
 });
 
