@@ -10,4 +10,13 @@ app.get("/", function(req, res) {
 	res.render("index.jade");
 });
 
+app.get("/bla", function(req, res) {
+	res.json({
+		"players": [
+			{name:"jakob"}, 
+			{name:"jocke"}
+		]
+	});
+})
+
 app.listen(3000)
