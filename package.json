@@ -1,0 +1,15 @@
+{
+  "name": "tipsyflix",
+  "description": "a drinking game for every movie",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.0.6",
+    "socket.io": "0.9.13",
+    "underscore": "1.4.3",
+    "express" : "3.2.5",
+	"mysql" : ">=0.9.3",
+	"generic-pool" : ">=2.0.0",
+	"jade" : ">=0.30.0"
+  }
+}
