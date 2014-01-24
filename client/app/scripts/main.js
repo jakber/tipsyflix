@@ -22,8 +22,14 @@ require.config({
 });
 
 require([
-    'backbone'
-], function (Backbone) {
+    'backbone',
+    'TipsyGame'
+], function (Backbone,TipsyGame) {
     Backbone.history.start();
+    var game = new TipsyGame();
+    game.start();
+    game.register("jocke");
     console.log('Hello from Backbone!');
 });
+
+
