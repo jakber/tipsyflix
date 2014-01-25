@@ -26,7 +26,19 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	  	container.html(enterNameView.render().el); 
 
 	  },
-	  game: function(gameId, name) {container.html(new GameView().render().el);},
+	  game: function(gameId, name) {
+
+	    console.log("gameId: " + gameId);
+	    var gameView = new GameView();
+	    gameView.gameId = gameId;
+	    gameView.name = name;
+
+		$.getJSON("http://localhost:3000/game/"+gameId+"/button", {}, function(data){
+			console.log("got buttons " + data);
+			gameView.buttons = data;	
+			container.html(gameView.render().el);
+	  	});
+	  },
 	  editGame: function(gameId, name) {
 	    
 	    console.log("gameId: " + gameId);
@@ -41,7 +53,17 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	  	});
 
 	  },
-	  scoreboard: function(gameId, name) {container.html(new ScoreboardView().render().el);},
+	  scoreboard: function(gameId, name) {
+	    console.log("scorebooard for : " + gameId);
+	    var scoreboardView = new ScoreboardView();
+	    scoreboardView.gameId = gameId;
+		$.getJSON("http://localhost:3000/game/"+gameId, {}, function(data){
+			console.log("got scores");
+			scoreboardView.scores = data;	
+			container.html(scoreboardView.render().el);
+	  	});
+
+	  },
 
   });
 

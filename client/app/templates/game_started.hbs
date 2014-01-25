@@ -8,7 +8,9 @@
 
 <div class="content play">
    <div class="play">
-      <button class="play">EPIC</button>
+      {{#each buttons}}
+         <button id="{{id}}" class="play">{{text}}</button>
+      {{/each}}
    </div>
    <div class="controls">
       <p>Score:0</p>

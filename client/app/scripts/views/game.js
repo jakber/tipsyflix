@@ -34,13 +34,17 @@ define(['backbone', 'compiled-templates', 'socketio'], function(Backbone, Handle
   });
   var Play = Backbone.View.extend({
     render: function () {
-      $(this.el).html(Handlebars.templates.game_started({value:"scoreboard"}));
+      console.log("buttons in render:" + this.buttons);
+      $(this.el).html(Handlebars.templates.game_started({value:"scoreboard", buttons:this.buttons}));
       return this;
     },
     events: {
     	"click button.play": "onEpic"
     },
-    onEpic: function() {
+    onEpic: function(event) {
+
+      console.log("pushed button: " + event.target.getAttribute('id'));
+
     	this.count = this.count || 0;
     	this.count++;
     	var view = Win;

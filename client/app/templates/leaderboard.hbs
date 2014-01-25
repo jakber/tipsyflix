@@ -8,13 +8,11 @@
 
 <div class="content score">
    <h2>Game ended</h2>
-   <ul>
-      <li>Toto <em>10</em></li>
-      <li>Popo <em>10</em></li>
-      <li>Lulu <em>10</em></li>
-      <li><strong>Mimi <em>10</em></strong></li>
-      <li>Lola <em>10</em></li>
-   </ul>
+   <table>
+      {{#each scores.players}}
+         <tr><td>{{name}}</td><td>{{wins}}</td><td>{{losses}}</td></li>         
+      {{/each}}
+   </table>
 </div>
 
 </body>
