@@ -34,14 +34,10 @@ require.config({
 
 require([
     'backbone',
-    'TipsyGame',
     'routers/main'
-], function (Backbone,TipsyGame, MainRouter) {
+], function (Backbone, MainRouter) {
     new MainRouter();
     Backbone.history.start();
-    var game = new TipsyGame();
-    game.start();
-    game.register("jocke");
 });
 
 
