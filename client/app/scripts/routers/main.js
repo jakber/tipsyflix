@@ -19,7 +19,13 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	  	});
 
 	  },
-	  enterName: function(gameId) {container.html(new EnterNameView().render().el); },
+	  enterName: function(gameId) {
+	  	console.log("gameId: " + gameId);
+	    var enterNameView = new EnterNameView();
+	    enterNameView.gameId = gameId;
+	  	container.html(enterNameView.render().el); 
+
+	  },
 	  game: function(gameId, name) {container.html(new GameView().render().el);},
 	  editGame: function(gameId, name) {container.html(new EditGameView().render().el);},
 	  scoreboard: function(gameId, name) {container.html(new ScoreboardView().render().el);},
