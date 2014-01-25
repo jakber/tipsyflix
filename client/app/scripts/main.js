@@ -21,13 +21,13 @@ require.config({
                 'handlebars.runtime'
             ],
             exports: 'Handlebars'
-        }
+        },
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
-        socketio: '../bower_components/socket.io-client/dist/socket.io.min',
+        socketio: 'socket.io', //../bower_components/socket.io-client/dist/socket.io',
         'handlebars.runtime': '../bower_components/handlebars/handlebars.runtime',
     }
 });

@@ -155,7 +155,7 @@ module.exports = function (grunt) {
                 html: '<%= yeoman.app %>/index.html',
                 ignorePath: '<%= yeoman.app %>/'
             }
-        },
+        },        
         rev: {
             dist: {
                 files: {
