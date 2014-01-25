@@ -1,12 +1,14 @@
-<div class="content play">
+<!-- game_started -->
+
+<div class="content">
    <div class="play">
       {{#each buttons}}
          <button id="{{id}}" class="play">{{text}}</button>
       {{/each}}
    </div>
    <div class="controls">
-      <p>Score:0</p>
-      <button class="good">Edit game</button>
-      <button class="bad">End game</button>
+      <h2><strong>Score: </strong>0</h2>
+      <button class="good"><img src="images/pause.svg" alt="pause/edit game" /></button>
+      <button class="bad"><img src="images/stop.svg" alt="end game" /></button>
    </div>
 </div>

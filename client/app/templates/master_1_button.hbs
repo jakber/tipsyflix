@@ -1,10 +1,9 @@
+<!-- config screen: master_1_button -->
 
 <div class="content config">	
-   <div class="play">
-      {{#each buttons}}
-      	<div class="play"><button value="{{id}}" class="edit"><img src="images/delete.svg" alt="delete" /></button></div>
-   	  {{/each}}
-   </div>
+   {{#each buttons}}
+   <div class="play"><button value="{{id}}" class="edit"><img src="images/delete.svg" alt="delete" /></button></div>
+   {{/each}}
    <div class="controls">
    <form>
       <input id="button-text" type="text" value="EPIC!" />

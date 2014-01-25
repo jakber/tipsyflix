@@ -70,7 +70,7 @@ input {
    text-align: center;
 }
 
-button {
+button, div.play {
    background-color: #039986;
    font-weight: bold;
    border-radius: 5px;
@@ -81,6 +81,25 @@ button {
    text-transform: inherit;
    display: inline-block;
    width: 100%;
+}
+
+button.bad {
+   background-color: #F66F4E;
+}
+
+button.edit {
+   position: absolute;
+   top: 22px;
+   right: 22px;
+}
+
+div.play {
+   width: auto;
+   position: relative;
+}
+
+button.play {
+   background-color: #013B44;
 }
 
 button.addButton {
