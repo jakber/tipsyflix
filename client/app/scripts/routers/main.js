@@ -9,7 +9,16 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	    "game/:id/:name/scores": "scoreboard"   // #search/kiwis/p7
 	  },
 
-	  home: function() { container.html(new HomeView().render().el); },
+	  home: function() { 
+
+	  	var view = new HomeView();
+
+	  	$.getJSON("http://localhost:3000/game", {}, function(data){
+			view.games = data;	
+			container.html(view.render().el); 
+	  	});
+
+	  },
 	  enterName: function(gameId) {container.html(new EnterNameView().render().el); },
 	  game: function(gameId, name) {container.html(new GameView().render().el);},
 	  editGame: function(gameId, name) {container.html(new EditGameView().render().el);},
