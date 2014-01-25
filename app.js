@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('underscore');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
@@ -33,26 +34,40 @@ var games = {
     "name": "pulp fiction",
     "players": [
       {
-        "nickname": "pelle",
-        "id": 1
+        "name": "pelle",
+        "id": 1,
+        "wins": 0,
+        "losses": 0
       },
       {
-        "nickname": "nisse",
-        "id": 2
+        "name": "kalle",
+        "id": 2,
+        "wins": 0,
+        "losses": 0
+      },
+      {
+        "name": "nisse",
+        "id": 3,
+        "wins": 0,
+        "losses": 0
       }
     ],
     "id": 0,
     "buttons": [
       {
-        "id": 3,
+        "id": 4,
         "text": "awesome"
+      },
+      {
+        "id": 5,
+        "text": "fake"
       }
     ],
     status:"pending",
     events:{}
   }
 };
-var id = 4;
+var id = 6;
 
 // /game GET -> [game1, game2,...] /* GET all games */
 // /game POST {name} /* add game */
@@ -96,7 +111,7 @@ app.post("/game/:gameId/player", function(req, res) {
 	
 	var game = games[gameId];
 	
-	game.players.push({"name":req.body.name,"id":id++});
+	game.players.push({"name":req.body.name,"id":id++, "wins":0, "losses":0, });
 
 	res.json(
 		game
@@ -152,27 +167,64 @@ app.get("/game/:gameId/button", function(req, res) {
 	);
 });
 
+function extractNames(arr) {
+	return _.map(arr, function(obj){
+		return obj.name;
+	});
+};
+
 app.post("/game/:gameId/button/:buttonId/player/:playerId", function(req, res) {
 	var gameId = req.param("gameId");
 	var buttonId = req.param("buttonId");
 	var playerId = req.param("playerId");
-	console.log("in game " + gameId + " player " + playerId + " pushed button " + buttonId);
-
 	
 	var game = games[gameId];
+	var player = _.first(_.filter(game.players, function(player){
+		return player.id == playerId;
+	}));
+
+	console.log("in game " + gameId + " player " + player.name + " pushed button " + buttonId);
 
 	if(buttonId in game.events){
 		var existingEvent = game.events[buttonId];
-		existingEvent.players.push(playerId);
+		
+		existingEvent.players.push(player);
 	} else {
 		var currentEvent = {"players":[]};
 		game.events[buttonId] = currentEvent;
-		currentEvent.players.push(playerId);
-
+		currentEvent.players.push(player);
+		
+		var that = this;
+		
 		setTimeout(function () {
 			console.log("Timeout " + game.events[buttonId]);
 
+			var allPlayers = game.players;
+			var votingPlayers = currentEvent.players;
+			
+			var losers = [];
+			if(allPlayers.length - votingPlayers.length > votingPlayers.length){
+				console.log("Event is false");				
+				losers = votingPlayers.slice(0);
+			} else {
+				console.log("Event is true");
+				losers = _.difference(allPlayers, votingPlayers);				
+			}
+
+			var winners = _.difference(allPlayers, losers);
+			
+			for (var i = 0; i < winners.length; i++) {
+				winners[i].wins++;
+			};
+
+			for (var i = 0; i < losers.length; i++) {
+				losers[i].losses++;
+			};
+
+			console.log("Losers are " + extractNames(losers) + ", Winners are " + extractNames(winners));
+
 			delete game.events[buttonId];
+
 		}, 5000);
 
 	}
