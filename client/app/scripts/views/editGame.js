@@ -35,7 +35,8 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
    		$.post("http://localhost:3000/game/" + this.gameId + "/start", {}, function(data, status, jq){
    			console.log("game started");
    			window.appRouter.navigate("game/" + that.gameId, true);
-   		});	
+      }); 
+      event.preventDefault(); 
     }
   });
 

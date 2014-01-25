@@ -61,9 +61,8 @@ var GameView = Backbone.View.extend({
         "click button.play": "onEpic"
     },
     onEpic: function(event) {
-        event.preventDefault();
         socket.emit("button_pushed", {"playerName":this.playerName, "gameId":this.gameId, "buttonId":event.currentTarget.id});
-        return false;
+        event.preventDefault();
     }
   });
 
