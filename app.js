@@ -48,7 +48,8 @@ var games = {
         "text": "awesome"
       }
     ],
-    status:"pending"
+    status:"pending",
+    events:{}
   }
 };
 var id = 4;
@@ -60,7 +61,7 @@ var id = 4;
 // /game/:id/button POST {text} /* add button to game */
 // /game/:id/start POST /* start game */
 // /game/:id/button GET [{text:"button text 1", id:0}, {text:"button text 2", id:1} ,...] /* GET all buttons in game */
-// /game/:id/button/:id POST /* push button in game */
+// /game/:id/button/:buttonId/:playerId POST /* push button in game */
 // /game/:id DELETE /* end game */
 // /game/:id GET /* get game stats */
 
@@ -81,8 +82,8 @@ app.post("/game", function(req, res) {
 		// already exists
 
 	} else {
-		games[gameId] = {"name":name, "players":[], "id":gameId, "buttons":[], status:"pending"};
-	}
+		games[gameId] = {"name":name, "players":[], "id":gameId, "buttons":[], "status":"pending", "events":{}};
+	};
 
 	res.json(
 		games
@@ -151,12 +152,31 @@ app.get("/game/:gameId/button", function(req, res) {
 	);
 });
 
-app.post("/game/:gameId/button/:buttonId", function(req, res) {
+app.post("/game/:gameId/button/:buttonId/player/:playerId", function(req, res) {
 	var gameId = req.param("gameId");
 	var buttonId = req.param("buttonId");
-	console.log("in game " + gameId + " push button " + buttonId);
+	var playerId = req.param("playerId");
+	console.log("in game " + gameId + " player " + playerId + " pushed button " + buttonId);
 
+	
 	var game = games[gameId];
+
+	if(buttonId in game.events){
+		var existingEvent = game.events[buttonId];
+		existingEvent.players.push(playerId);
+	} else {
+		var currentEvent = {"players":[]};
+		game.events[buttonId] = currentEvent;
+		currentEvent.players.push(playerId);
+
+		setTimeout(function () {
+			console.log("Timeout " + game.events[buttonId]);
+
+			delete game.events[buttonId];
+		}, 5000);
+
+	}
+
 	
 	res.json(
 		game
