@@ -40,5 +40,27 @@ ul li {
    border-bottom: 2px solid #013B44;
    text-align: left;
    color: white;
-   line-height: 36px
+   line-height: 36px;
+   text-transform: none;
+}
+
+ul li:last-child {
+   border-bottom: none;
+}
+
+a {
+   color: white;
+   text-decoration: none;
+}
+
+button {
+   background-color: #039986;
+   font-weight: bold;
+   border-radius: 5px;
+   padding: 22px;
+   border: none;
+   font-size: inherit;
+   color: inherit;
+   text-transform: inherit;
+   display: block;
 }
