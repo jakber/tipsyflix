@@ -28,6 +28,11 @@ io.sockets.on('connection', function (socket) {
         }));
         handleButtonPushed(data.gameId, data.buttonId, player.id);
     });
+    socket.on('end_game', function (data) {
+        var game = games[data.gameId];
+        game.status = "ended";
+        io.sockets.in(game.id).emit("game_ended", game);
+    })
 });
 
 

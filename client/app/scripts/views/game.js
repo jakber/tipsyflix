@@ -34,6 +34,10 @@ var GameView = Backbone.View.extend({
             console.log(data);
             setTimeout(function() {that.renderPlay();}, 1500);
         });
+        socket.on('game_ended', function(data) {
+            console.log("game ended", data);
+            window.appRouter.navigate("game/" + that.gameId + "/" + that.playerName +"/scores", true);
+        })
     },
 
     render: function () {
@@ -58,15 +62,18 @@ var GameView = Backbone.View.extend({
     },
 
     events: {
-        "click button.play": "onEpic"
+        "click button.play": "onEpic",
+        "click button.bad": "onEndGame",
     },
     onEpic: function(event) {
         socket.emit("button_pushed", {"playerName":this.playerName, "gameId":this.gameId, "buttonId":event.currentTarget.id});
         event.preventDefault();
+    },
+    onEndGame: function(event) {
+        socket.emit("end_game", {"playerName":this.playerName, "gameId":this.gameId});
+        event.preventDefault();
     }
   });
-
-
 
   return GameView;
 });

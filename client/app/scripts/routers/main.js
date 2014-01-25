@@ -33,14 +33,8 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	  },
 	  scoreboard: function(gameId, name) {
 	    console.log("scoreboard for : " + gameId);
-	    var scoreboardView = new ScoreboardView();
-	    scoreboardView.gameId = gameId;
-		$.getJSON("http://localhost:3000/game/"+gameId, {}, function(data){
-			console.log("got scores");
-			scoreboardView.scores = data;	
-			container.html(scoreboardView.render().el);
-	  	});
-
+	    var scoreboardView = new ScoreboardView({gameId:gameId});
+        container.html(scoreboardView.render().el);
 	  },
 
   });
