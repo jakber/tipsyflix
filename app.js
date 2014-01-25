@@ -283,7 +283,7 @@ function handleButtonPushed(gameId, buttonId, playerId) {
                     console.log("Losers are " + extractNames(losers) + ", Winners are " + extractNames(winners));
 
                     // Send event to all clients in game
-                    io.sockets.in(gameId).emit("round_ended", {"winners":winners,"losers":losers});
+                    io.sockets.in(gameId).emit("round_ended", {"winners":extractNames(winners),"losers":extractNames(losers)});
                     delete game.events[buttonId];
 
             }, 5000);

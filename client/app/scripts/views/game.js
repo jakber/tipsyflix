@@ -7,12 +7,11 @@ var GameView = Backbone.View.extend({
         var that = this;
         this.gameId = options.gameId;
         this.playerName = options.name;
-        $.getJSON("http://localhost:3000/game/"+options.gameId+"/button", {}, function(data){
-            console.log("got buttons");
-            console.log(data);
-            that.buttons = data;  
-            that.render();
-        });
+    },
+
+    render: function () {
+        this.$el.html(Handlebars.templates.waiting());
+        var that = this;
         socket = io.connect("http://localhost:3000");
         socket.on('disconnect', function() { console.log("disconnected")})
         socket.on('connect',function (data) {
@@ -20,44 +19,44 @@ var GameView = Backbone.View.extend({
             socket.emit('join_game', {gameId: that.gameId}, function(response){ console.log(response)});
         });
         socket.on('game_started', function (data) {
-            console.log("game_started " + data);
+            console.log("game_started " ,data);
+            that.buttons = data.buttons;
             that.renderPlay(data);
         });
         socket.on('round_ended', function (data) {
             console.log(data);
-            that.renderWin(data);
-            that.renderLose(data);
+            if (data.winners.indexOf(that.playerName) != -1)
+                that.renderWin(data);
+            else
+                that.renderLose(data);
             setTimeout(function() {that.renderPlay();}, 1500);
 
-        });
-        socket.on('round_lost', function (data) {
-            console.log(data);
-            setTimeout(function() {that.renderPlay();}, 1500);
         });
         socket.on('game_ended', function(data) {
             console.log("game ended", data);
             window.appRouter.navigate("game/" + that.gameId + "/" + that.playerName +"/scores", true);
         })
-    },
-
-    render: function () {
-        $(this.el).html(Handlebars.templates.waiting());
         return this;
     },
     renderPlay: function (data) {
         console.log("renderPlay");
-        $(this.el).html(Handlebars.templates.game_started({buttons:this.buttons}));
+        this.$el.html(Handlebars.templates.game_started({buttons:this.buttons}));
         return this;
     },
     renderLose: function (data) {
         console.log("renderLose");
-
-        $(this.el).html(Handlebars.templates.lose(data));
+        var that = this;
+        var losers = data.losers.filter(function(s) {s != that.playerName});
+        var message = losers.length > 0 ? "So did " + losers.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
+        this.$el.html(Handlebars.templates.lose({message:message}));
         return this;
     },
     renderWin: function (data) {
         console.log("renderWin");
-        $(this.el).html(Handlebars.templates.win(data));
+        var that = this;
+        var winners = data.winners.filter(function(s) {s != that.playerName});
+        var message = winners.length > 0 ? "So did " + winners.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
+        this.$el.html(Handlebars.templates.win({message:message}));
         return this;
     },
 
