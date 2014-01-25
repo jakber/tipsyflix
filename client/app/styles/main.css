@@ -1,29 +1,44 @@
 body {
-    background: #ffaaaa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+   background: #002327;
+   font-family: sans-serif;
+   color: white;
+   margin: 0;
+   padding: 0;
+   font: 24px sans-serif;
+   text-transform: uppercase;
 }
 
 .hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
+   margin: 50px auto 0 auto;
+   text-align: center;
+   width: auto;
+   font-size: 18px;
+   font-weight: 200;
+   line-height: 30px;
 }
 
 .hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+   font-family: 'Monoton', cursive;
+   font-size: 48px;
+   line-height: 1;
 }
 
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+   margin: 0.2em 0;
+   background: #ccc;
+   color: #000;
+   padding: 0.2em 0;
+}
+
+ul {
+   margin: 0 30px;
+   padding: 0;
+}
+
+ul li {
+   list-style-type: none;
+   border-bottom: 2px solid #013B44;
+   text-align: left;
+   color: white;
+   line-height: 36px
 }
