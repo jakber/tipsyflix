@@ -1,4 +1,4 @@
-define(['backbone', 'compiled-templates', 'socketio', 'config'], function(Backbone, Handlebars, io, config){
+define(['backbone', 'compiled-templates', 'socketio', 'config', 'underscore'], function(Backbone, Handlebars, io, config){
 var socket = null;
 
 var GameView = Backbone.View.extend({
@@ -21,7 +21,7 @@ var GameView = Backbone.View.extend({
         socket.on('game_started', function (data) {
             console.log("game_started " ,data);
             that.buttons = data.buttons;
-            that.renderPlay(data);
+            that.renderPlay();
         });
         socket.on('round_ended', function (data) {
             console.log(data);
@@ -38,9 +38,15 @@ var GameView = Backbone.View.extend({
         })
         return this;
     },
-    renderPlay: function (data) {
+    renderPlay: function () {
         console.log("renderPlay");
-        this.$el.html(Handlebars.templates.game_started({buttons:this.buttons}));
+        var that = this;
+        $.getJSON("http://localhost:3000/game/" + this.gameId + "/player", {}, function(data) {
+            var player = _.first(_.filter(data, function(e) { return e.name == that.playerName }));
+            var playerScore = player.wins - player.losses;
+            that.$el.html(Handlebars.templates.game_started({buttons:that.buttons, score:playerScore}));
+        });
+        
         return this;
     },
     renderLose: function (data) {
