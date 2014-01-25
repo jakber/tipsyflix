@@ -66,7 +66,7 @@ var games = {
                 "text": "fake"
             }
         ],
-        status:"pending",
+        status:"ongoing",
         events:{}
     }
 };
@@ -85,8 +85,13 @@ var id = 6;
 
 app.get("/game", function(req, res) {
         console.log("get all games");
+        
+        var activeGames = _.filter(games, function(game){
+                return game.status == "ongoing";
+        });
+
         res.json(
-                games
+                activeGames
         );
 });
 

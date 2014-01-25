@@ -4,8 +4,8 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	 routes: {
 	    "": "home",    // #help
 	    "game/:id": "enterName", 
+	    "game/:id/edit": "editGame",  // #search/kiwis
 	    "game/:id/:name": "game",  // #search/kiwis
-	    "game/:id/:name/edit": "editGame",  // #search/kiwis
 	    "game/:id/:name/scores": "scoreboard"   // #search/kiwis/p7
 	  },
 

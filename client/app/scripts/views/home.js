@@ -9,12 +9,11 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
     },
     onCreateGame : function(event){
 		var gameName = $("#game-name").val();
-		var playerName = $("#player-name").val();
    		console.log("create game " + gameName);
 		var that = this;
    		$.post("http://localhost:3000/game", {"name":gameName}, function(data, status, jq){
    			console.log("game created " + data.id);
-   			window.appRouter.navigate("game/" + data.id + "/" + playerName + "/edit", true);
+   			window.appRouter.navigate("game/" + data.id + "/edit", true);
    		});
     }
     
