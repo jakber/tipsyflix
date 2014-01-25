@@ -104,7 +104,7 @@ app.post("/game", function(req, res) {
         };
 
         res.json(
-                games
+                games[gameId]
         );
 });
 

@@ -8,9 +8,12 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
             "click button#add-player-button" : "createPlayer"
     },
     createPlayer : function(event){
-   		console.log("create player " + $("#player-name").val());
-   		$.post("http://localhost:3000/game/" + this.gameId + "/player", {"name":$("#player-name").val()}, function(data, status, jq){
+    	var playerName = $("#player-name").val();
+   		console.log("create player " + playerName);
+   		var that = this;
+   		$.post("http://localhost:3000/game/" + this.gameId + "/player", {"name":playerName}, function(data, status, jq){
    			console.log("player created ");
+   			window.appRouter.navigate("game/" + that.gameId + "/" + playerName, true);
    		});
     }
   });

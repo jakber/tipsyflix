@@ -36,7 +36,7 @@ require([
     'backbone',
     'routers/main'
 ], function (Backbone, MainRouter) {
-    new MainRouter();
+    window.appRouter = new MainRouter();
     Backbone.history.start();
 });
 

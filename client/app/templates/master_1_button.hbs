@@ -7,12 +7,18 @@
 <body>
 
 <div class="content config">
+   
+	
    <div class="play">
-      <div class="play"><button class="edit">EPIC</button></div>
+      {{#each buttons}}
+      	<div class="play"><button value="{{id}}" class="edit">{{text}}</button></div>
+   	  {{/each}}
+      
    </div>
    <div class="controls">
-      <button class="good">Add button</button>
-      <button class="bad">Start game</button>
+	  <input id="button-text" type="text" value="EPIC!" />
+      <button class="addButton">Add button</button>
+      <button class="startGame">Start game</button>
    </div>
 </div>
 

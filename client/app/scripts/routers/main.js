@@ -27,7 +27,20 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 
 	  },
 	  game: function(gameId, name) {container.html(new GameView().render().el);},
-	  editGame: function(gameId, name) {container.html(new EditGameView().render().el);},
+	  editGame: function(gameId, name) {
+	    
+	    console.log("gameId: " + gameId);
+	    var editGameView = new EditGameView();
+	    editGameView.gameId = gameId;
+	    editGameView.name = name;
+
+		$.getJSON("http://localhost:3000/game/"+gameId+"/button", {}, function(data){
+			console.log("got buttons");
+			editGameView.buttons = data;	
+			container.html(editGameView.render().el);
+	  	});
+
+	  },
 	  scoreboard: function(gameId, name) {container.html(new ScoreboardView().render().el);},
 
   });
