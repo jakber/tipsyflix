@@ -11,21 +11,22 @@ var server = require("http").createServer(app)
 var io = require("socket.io").listen(server);
 
 io.sockets.on('connection', function (socket) {
-    socket.on('join_game', function (gameId) {
-        socket.set('room', gameId, function() { console.log('room ' + gameId + ' saved'); } );
-        socket.join(gameId);
-    });
-    socket.on('button_pushed', function (data) {
-        console.log(data);
-        setTimeout(function() {
-            socket.emit('round_won', { hello: 'world' });
-        }, 2000);
-    });
-    socket.on('game_joined', function (data) {
-        console.log(data);
+    socket.on('join_game', function (data) {
+        socket.set('room', data.gameId, function() {
+            console.log('room ' + data.gameId + ' saved');
+        });
+        socket.join(data.gameId);
         setTimeout(function() {
             socket.emit('game_started', games[data.gameId]);
         }, 1000);
+    });
+    socket.on('button_pushed', function (data) {
+        console.log(data);
+        var game = games[data.gameId];
+        var player = _.first(_.filter(game.players, function(player){
+            return player.name == data.playerName;
+        }));
+        handleButtonPushed(data.gameId, data.buttonId, player.id);
     });
 });
 
@@ -196,62 +197,10 @@ app.post("/game/:gameId/button/:buttonId/player/:playerId", function(req, res) {
         var buttonId = req.param("buttonId");
         var playerId = req.param("playerId");
         
-        var game = games[gameId];
-        var player = _.first(_.filter(game.players, function(player){
-                return player.id == playerId;
-        }));
-
-        console.log("in game " + gameId + " player " + player.name + " pushed button " + buttonId);
-
-        if(buttonId in game.events){
-                var existingEvent = game.events[buttonId];
-                
-                existingEvent.players.push(player);
-        } else {
-                var currentEvent = {"players":[]};
-                game.events[buttonId] = currentEvent;
-                currentEvent.players.push(player);
-                
-                var that = this;
-                
-                setTimeout(function () {
-                        console.log("Timeout " + game.events[buttonId]);
-
-                        var allPlayers = game.players;
-                        var votingPlayers = currentEvent.players;
-                        
-                        var losers = [];
-                        if(allPlayers.length - votingPlayers.length > votingPlayers.length){
-                                console.log("Event is false");              
-                                losers = votingPlayers.slice(0);
-                        } else {
-                                console.log("Event is true");
-                                losers = _.difference(allPlayers, votingPlayers);               
-                        }
-
-                        var winners = _.difference(allPlayers, losers);
-                        
-                        for (var i = 0; i < winners.length; i++) {
-                                winners[i].wins++;
-                        };
-
-                        for (var i = 0; i < losers.length; i++) {
-                                losers[i].losses++;
-                        };
-
-                        console.log("Losers are " + extractNames(losers) + ", Winners are " + extractNames(winners));
-
-                        // Send event to all clients in game
-                        io.sockets.in(gameId).emit("round_ended", {"winners":winners,"losers":losers})
-                        delete game.events[buttonId];
-
-                }, 5000);
-
-        }
-
+        var game = handleButtonPushed(gameId, buttonId, playerId);
         
         res.json(
-                game
+            game
         );
 });
 
@@ -280,3 +229,60 @@ app.del("/game/:gameId", function(req, res, next) {
 });
 
 server.listen(3000)
+
+
+function handleButtonPushed(gameId, buttonId, playerId) {
+    var game = games[gameId];
+    var player = _.first(_.filter(game.players, function(player){
+            return player.id == playerId;
+    }));
+
+    console.log("in game " + gameId + " player " + player.name + " pushed button " + buttonId);
+
+    if(buttonId in game.events){
+            var existingEvent = game.events[buttonId];
+            
+            existingEvent.players.push(player);
+    } else {
+            var currentEvent = {"players":[]};
+            game.events[buttonId] = currentEvent;
+            currentEvent.players.push(player);
+            
+            var that = this;
+            
+            setTimeout(function () {
+                    console.log("Timeout " + game.events[buttonId]);
+
+                    var allPlayers = game.players;
+                    var votingPlayers = currentEvent.players;
+                    
+                    var losers = [];
+                    if(allPlayers.length - votingPlayers.length > votingPlayers.length){
+                            console.log("Event is false");              
+                            losers = votingPlayers.slice(0);
+                    } else {
+                            console.log("Event is true");
+                            losers = _.difference(allPlayers, votingPlayers);               
+                    }
+
+                    var winners = _.difference(allPlayers, losers);
+                    
+                    for (var i = 0; i < winners.length; i++) {
+                            winners[i].wins++;
+                    };
+
+                    for (var i = 0; i < losers.length; i++) {
+                            losers[i].losses++;
+                    };
+
+                    console.log("Losers are " + extractNames(losers) + ", Winners are " + extractNames(winners));
+
+                    // Send event to all clients in game
+                    io.sockets.in(gameId).emit("round_ended", {"winners":winners,"losers":losers});
+                    delete game.events[buttonId];
+
+            }, 5000);
+
+    }
+    return game;
+}
