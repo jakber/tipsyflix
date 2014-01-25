@@ -13,6 +13,7 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
 
+
     grunt.initConfig({
         // configurable paths
         yeoman: {
@@ -37,10 +38,17 @@ module.exports = function (grunt) {
             },
             jst: {
                 files: [
-                    '<%= yeoman.app %>/scripts/templates/*.ejs'
+                    '<%= yeoman.app %>/scripts/templates/*.ejs',
                 ],
                 tasks: ['jst']
-            }
+            },
+            handlebars: {
+                files: [
+                    '<%= yeoman.app %>/templates/*.hbs',
+                ],
+                tasks: ['handlebars']
+            },
+
         },
         connect: {
             options: {
@@ -298,6 +306,25 @@ module.exports = function (grunt) {
                 'svgmin',
                 'htmlmin'
             ]
+        },
+        handlebars: {
+            compile: {
+                files: {
+                    ".tmp/scripts/compiled-templates.js": [
+                    "app/templates/**/*.hbs"
+                    ]
+                },
+                options: {
+                    namespace: 'Handlebars.templates',
+                    wrapped: true,
+                    processName: function(filename) {
+                        // funky name processing here
+                        return filename
+                            .replace(/^app\/templates\//, '')
+                            .replace(/\.hbs$/, '');
+                    }
+                }
+            }
         }
     });
 
@@ -312,6 +339,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
+            'handlebars',
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',
@@ -347,4 +375,7 @@ module.exports = function (grunt) {
         'test',
         'build'
     ]);
+
+    grunt.loadNpmTasks('grunt-contrib-handlebars');
+
 };

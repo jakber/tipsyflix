@@ -1,4 +1,4 @@
-define ("TipsyGame", ["backbone", "jquery", "socketio"], function(Backbone, $, io) {
+define ("TipsyGame", ["backbone", "jquery", "socketio", "views/game"], function(Backbone, $, io, GameView) {
 			
 			function TipsyGame() {
 
@@ -12,6 +12,7 @@ define ("TipsyGame", ["backbone", "jquery", "socketio"], function(Backbone, $, i
 				socket.on("news", function(data) {
 					console.log(data);
 				})
+				new GameView();
 			}
 
 			TipsyGame.prototype.register = function(name) {
