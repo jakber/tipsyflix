@@ -1,9 +1,15 @@
-define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
+define(['backbone', 'compiled-templates', 'socketio'], function(Backbone, Handlebars, io){
+  var socket = null;
+
   var GameView = Backbone.View.extend({
     render: function () {
       $(this.el).html(new Waiting().render().el);
       var that = this;
-      setTimeout(function() { $(that.el).html(new Play().render().el); }, 2000)
+      socket = io.connect("http://localhost:3000");
+      socket.on('game_started', function (data) {
+        console.log(data);
+        $(that.el).html(new Play().render().el);
+      });
       return this;
     }
   });
