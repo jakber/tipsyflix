@@ -114,6 +114,10 @@ div.play:nth-child(2n),
    float: right;
 }
 
+.config div.play:nth-child(3n):last-child {
+   width: 100%;
+}
+
 div.play button {
    width: auto;
    padding: 0;
@@ -162,9 +166,9 @@ button.addButton {
 .score table {
    border: none;
    padding: 0;
-   margin: 0;
+   margin: 0 auto;
    text-align: right;
-   width: 100%;
+   width: 95%;
    margin-bottom: 20px;
 }
 
@@ -172,17 +176,20 @@ button.addButton {
    font-weight: bold;
 }
 
-.score table tr:first-child td:last-child {
+
+.score table tr td:last-child {
    color: #F66F4E;
 }
 
-.score table tr:first-child td:nth-child(2) {
+.score table tr td:nth-child(2) {
    color: #039986;
 }
+
 
 .score table tr td:first-child {
    text-align: left;
    padding-left: 5px;
+   width: 100%;
 }
 
 .score table tr td:last-child {
@@ -195,4 +202,8 @@ button.addButton {
 
 .score table tr:last-child td {
    border-bottom: none;
+}
+
+.score h2 {
+   color: #F66F4E;
 }
