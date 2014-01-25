@@ -40,3 +40,6 @@ app/bower_components
 ### Yeoman ###
 dist
 test/temp
+
+### environment configuration ###
+config.js

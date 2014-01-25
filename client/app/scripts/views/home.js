@@ -1,8 +1,8 @@
-define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
+define(['backbone', 'compiled-templates', 'config'], function(Backbone, Handlebars, config){
   var HomeView = Backbone.View.extend({
   	initialize: function() {
   		var that = this;
-  		$.getJSON("http://localhost:3000/game", {}, function(data){
+  		$.getJSON(config.server + "/game", {}, function(data){
 			that.games = data;	
 			that.render(); 
 	  	});
@@ -18,7 +18,7 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
 		var gameName = $("#game-name").val();
    		console.log("create game " + gameName);
 		var that = this;
-   		$.post("http://localhost:3000/game", {"name":gameName}, function(data, status, jq){
+   		$.post(config.server + "/game", {"name":gameName}, function(data, status, jq){
    			console.log("game created " + data.id);
    			window.appRouter.navigate("game/" + data.id + "/edit", true);
    		});

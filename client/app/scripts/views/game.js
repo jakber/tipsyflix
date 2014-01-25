@@ -1,4 +1,4 @@
-define(['backbone', 'compiled-templates', 'socketio'], function(Backbone, Handlebars, io){
+define(['backbone', 'compiled-templates', 'socketio', 'config'], function(Backbone, Handlebars, io, config){
 var socket = null;
 
 var GameView = Backbone.View.extend({
@@ -12,7 +12,7 @@ var GameView = Backbone.View.extend({
     render: function () {
         this.$el.html(Handlebars.templates.waiting());
         var that = this;
-        socket = io.connect("http://localhost:3000");
+        socket = io.connect(config.server);
         socket.on('disconnect', function() { console.log("disconnected")})
         socket.on('connect',function (data) {
             console.log("connect for gameId " + that.gameId);

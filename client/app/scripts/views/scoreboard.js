@@ -1,8 +1,8 @@
-define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
+define(['backbone', 'compiled-templates', 'config'], function(Backbone, Handlebars, config){
   var GameView = Backbone.View.extend({
   	initialize: function(options) {
   		var that = this;
-  		$.getJSON("http://localhost:3000/game/"+options.gameId, {}, function(data){
+  		$.getJSON(config.server + "/game/"+options.gameId, {}, function(data){
 			console.log("got scores");
 			that.scores = data;	
 			that.render();

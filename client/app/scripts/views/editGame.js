@@ -1,9 +1,9 @@
-define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
+define(['backbone', 'compiled-templates', 'config'], function(Backbone, Handlebars, config){
   var GameView = Backbone.View.extend({
   	initialize: function(options) {
   		console.log(options);
   		var that = this;
-  		$.getJSON("http://localhost:3000/game/"+options.gameId+"/button", {}, function(data){
+  		$.getJSON(config.server + "/game/"+options.gameId+"/button", {}, function(data){
 			console.log("got buttons");
 			that.buttons = data;	
 			that.render();
@@ -22,7 +22,7 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
     	var buttonText = $("#button-text").val();
    		console.log("create button " + buttonText);
    		var that = this;
-   		$.post("http://localhost:3000/game/" + this.gameId + "/button", {"text":buttonText}, function(data, status, jq){
+   		$.post(config.server + "/game/" + this.gameId + "/button", {"text":buttonText}, function(data, status, jq){
    			console.log("button created ");
    			that.buttons.push({text:buttonText});
    			that.render();
@@ -32,7 +32,7 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
     onStartGame : function(event){
    		console.log("start game");
    		var that = this;
-   		$.post("http://localhost:3000/game/" + this.gameId + "/start", {}, function(data, status, jq){
+   		$.post(config.server + "/game/" + this.gameId + "/start", {}, function(data, status, jq){
    			console.log("game started");
    			window.appRouter.navigate("game/" + that.gameId, true);
       }); 
