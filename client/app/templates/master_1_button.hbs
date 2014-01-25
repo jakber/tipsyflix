@@ -1,26 +1,13 @@
-<!DOCKTYPE html>
-<html>
-<head>
-   <title>Tipsyflix - Configure Game</title>
-   <link rel="stylesheet" href="styles/styles.css" />
-</head>
-<body>
 
-<div class="content config">
-   
-	
+<div class="content config">	
    <div class="play">
       {{#each buttons}}
-      	<div class="play"><button value="{{id}}" class="edit">{{text}}</button></div>
+      	<div class="play"><button value="{{id}}" class="edit"><img src="images/delete.svg" alt="delete" /></button></div>
    	  {{/each}}
-      
    </div>
    <div class="controls">
-	  <input id="button-text" type="text" value="EPIC!" />
-      <button class="addButton">Add button</button>
-      <button class="startGame">Start game</button>
+      <input id="button-text" type="text" value="EPIC!" />
+      <button class="addButton"><img src="images/add.svg" alt="add" /></button>
+      <button class="startGame"><img src="images/play.svg" alt="Play" /></button>
    </div>
 </div>
-
-</body>
-</html>

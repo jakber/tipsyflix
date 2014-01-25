@@ -9,18 +9,29 @@ body {
 }
 
 .hero-unit {
-   margin: 50px auto 0 auto;
+   margin: 0 auto 0 auto;
    text-align: center;
    width: auto;
+   max-width: 800px;
    font-size: 18px;
    font-weight: 200;
    line-height: 30px;
 }
 
-.hero-unit h1 {
+h1, h2 {
    font-family: 'Monoton', cursive;
    font-size: 48px;
    line-height: 1;
+   font-weight: normal;
+}
+
+h2 {
+   font-size: 24px;
+   color: #039986;
+}
+
+strong {
+   color: white;
 }
 
 .browsehappy {
@@ -31,7 +42,7 @@ body {
 }
 
 ul {
-   margin: 0 30px;
+   margin: 0;
    padding: 0;
 }
 
@@ -53,6 +64,12 @@ a {
    text-decoration: none;
 }
 
+input {
+   font-size: 36px;
+   width: 99%;
+   text-align: center;
+}
+
 button {
    background-color: #039986;
    font-weight: bold;
@@ -62,5 +79,30 @@ button {
    font-size: inherit;
    color: inherit;
    text-transform: inherit;
-   display: block;
+   display: inline-block;
+   width: 100%;
 }
+
+button.addButton {
+   background-color: #F66F4E;
+}
+
+.lobby, .name {
+   padding: 0 30px;
+}
+
+.content.name {
+   position: relative;
+}
+
+.content.name h2 {
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 30%;
+    width: 50%;
+    margin: -15% 0 0 -25%;
+}
+
+
+

@@ -1,19 +1,10 @@
-<!DOCKTYPE html>
-<html>
-<head>
-   <title>Tipsyflix - Leaderboard</title>
-   <link rel="stylesheet" href="styles/styles.css" />
-</head>
-<body>
-
 <div class="content score">
+   <h1>TipsyFlix</h1>
    <h2>Game ended</h2>
    <table>
       {{#each scores.players}}
          <tr><td>{{name}}</td><td>{{wins}}</td><td>{{losses}}</td></li>         
       {{/each}}
    </table>
+   <button>New Game</button>
 </div>
-
-</body>
-</html>

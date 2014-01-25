@@ -1,12 +1,6 @@
-<!DOCKTYPE html>
-<html>
-<head>
-   <title>Tipsyflix - Join Game</title>
-   <link rel="stylesheet" href="styles/styles.css" />
-</head>
-<body>
-
-<div class="content lobby">
+<!-- home -->
+<div class="lobby">
+   <h1>nextflix</h1>
    <h2><strong>Join</strong> Game</h2>
    <ul>
    {{#each games}}
@@ -14,10 +8,9 @@
    {{/each}}
    </ul>
 
-   <h2>... or create a new game</strong></h2>
-   movie name:<input id="game-name" type="text" value="" /><br>
-   <button id="create-game"><strong>Create</strong> Game</button>
+   <div class="config">
+      <h2><strong>or</strong></h2>
+      <input id="game-name" type="text" placeholder="Game name" value="" />
+      <button id="create-game"><strong>Create</strong> Game</button>
+   </div>
 </div>
-
-</body>
-</html>
