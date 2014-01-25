@@ -5,7 +5,7 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
       return this;
     }
     ,events : {
-            "click button#add-player-button" : "createPlayer"
+            "click button#add-player-button, submit form" : "createPlayer"
     },
     createPlayer : function(event){
     	var playerName = $("#player-name").val();
@@ -15,6 +15,7 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
    			console.log("player created ");
    			window.appRouter.navigate("game/" + that.gameId + "/" + playerName, true);
    		});
+   		event.preventDefault();
     }
   });
 

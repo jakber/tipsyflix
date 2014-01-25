@@ -10,14 +10,8 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 	  },
 
 	  home: function() { 
-
 	  	var view = new HomeView();
-
-	  	$.getJSON("http://localhost:3000/game", {}, function(data){
-			view.games = data;	
-			container.html(view.render().el); 
-	  	});
-
+	  	container.html(view.render().el); 
 	  },
 	  enterName: function(gameId) {
 	  	console.log("gameId: " + gameId);
@@ -27,34 +21,18 @@ define(['jquery', 'views/home','views/enterName','views/game','views/editGame','
 
 	  },
 	  game: function(gameId, name) {
-
 	    console.log("gameId: " + gameId);
-	    var gameView = new GameView();
-	    gameView.gameId = gameId;
-	    gameView.name = name;
-
-		$.getJSON("http://localhost:3000/game/"+gameId+"/button", {}, function(data){
-			console.log("got buttons " + data);
-			gameView.buttons = data;	
-			container.html(gameView.render().el);
-	  	});
+	    var gameView = new GameView({gameId:gameId, name:name});
+	    container.html(gameView.render().el);
 	  },
-	  editGame: function(gameId, name) {
-	    
-	    console.log("gameId: " + gameId);
-	    var editGameView = new EditGameView();
+	  editGame: function(gameId) {
+	 	var editGameView = new EditGameView({gameId:gameId});
 	    editGameView.gameId = gameId;
-	    editGameView.name = name;
-
-		$.getJSON("http://localhost:3000/game/"+gameId+"/button", {}, function(data){
-			console.log("got buttons");
-			editGameView.buttons = data;	
-			container.html(editGameView.render().el);
-	  	});
+	    container.html(editGameView.render().el);
 
 	  },
 	  scoreboard: function(gameId, name) {
-	    console.log("scorebooard for : " + gameId);
+	    console.log("scoreboard for : " + gameId);
 	    var scoreboardView = new ScoreboardView();
 	    scoreboardView.gameId = gameId;
 		$.getJSON("http://localhost:3000/game/"+gameId, {}, function(data){

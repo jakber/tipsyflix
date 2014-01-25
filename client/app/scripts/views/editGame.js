@@ -1,11 +1,21 @@
 define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
   var GameView = Backbone.View.extend({
+  	initialize: function(options) {
+  		console.log(options);
+  		var that = this;
+  		$.getJSON("http://localhost:3000/game/"+options.gameId+"/button", {}, function(data){
+			console.log("got buttons");
+			that.buttons = data;	
+			that.render();
+	  	});
+  	},
     render: function () {
-      $(this.el).html(Handlebars.templates.master_1_button({value:"editGame", "buttons":this.buttons}));
-      return this;
+    	console.log("render");
+    	this.$el.html(Handlebars.templates.master_1_button({value:"editGame", "buttons":this.buttons}));
+    	return this;
     },
     events: {
-    	"click button.addButton": "onAddButton",
+    	"click button.addButton, submit form": "onAddButton",
     	"click button.startGame": "onStartGame"
     },
     onAddButton : function(event){
@@ -14,8 +24,10 @@ define(['backbone', 'compiled-templates'], function(Backbone, Handlebars){
    		var that = this;
    		$.post("http://localhost:3000/game/" + this.gameId + "/button", {"text":buttonText}, function(data, status, jq){
    			console.log("button created ");
-   			window.appRouter.navigate("game/" + that.gameId + "/" + this.name + "/edit", true);
+   			that.buttons.push({text:buttonText});
+   			that.render();
    		});
+   		event.preventDefault();
     },
     onStartGame : function(event){
    		console.log("start game");

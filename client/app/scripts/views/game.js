@@ -2,6 +2,17 @@ define(['backbone', 'compiled-templates', 'socketio'], function(Backbone, Handle
   var socket = null;
 
   var GameView = Backbone.View.extend({
+    initialize: function(options) {
+      console.log(options);
+      var that = this;
+      $.getJSON("http://localhost:3000/game/"+options.gameId+"/button", {}, function(data){
+        console.log("got buttons");
+        console.log(data);
+        that.buttons = data;  
+        that.render();
+      });
+    },
+
     render: function () {
       $(this.el).html(new Waiting().render().el);
       var that = this;
