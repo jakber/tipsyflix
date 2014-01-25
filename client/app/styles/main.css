@@ -211,3 +211,7 @@ button.addButton {
 .score h2 {
    color: #F66F4E;
 }
+
+button.pressed {
+   background-color: red;
+}

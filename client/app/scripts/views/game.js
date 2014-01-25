@@ -71,6 +71,8 @@ var GameView = Backbone.View.extend({
         "click button.bad": "onEndGame",
     },
     onEpic: function(event) {
+        console.log("Changing class on button ", $("#"+event.currentTarget.id));
+        $("#"+event.currentTarget.id).addClass("pressed");
         socket.emit("button_pushed", {"playerName":this.playerName, "gameId":this.gameId, "buttonId":event.currentTarget.id});
         event.preventDefault();
     },
