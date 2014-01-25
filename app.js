@@ -61,7 +61,7 @@ var id = 4;
 // /game/:id/button POST {text} /* add button to game */
 // /game/:id/start POST /* start game */
 // /game/:id/button GET [{text:"button text 1", id:0}, {text:"button text 2", id:1} ,...] /* GET all buttons in game */
-// /game/:id/button/:buttonId/:playerId POST /* push button in game */
+// /game/:id/button/:buttonId/player/:playerId POST /* push button in game */
 // /game/:id DELETE /* end game */
 // /game/:id GET /* get game stats */
 
