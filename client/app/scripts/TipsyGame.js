@@ -5,7 +5,7 @@ define ("TipsyGame", ["backbone", "jquery", "socketio"], function(Backbone, $, i
 			};
 
 			TipsyGame.prototype.start = function() {
-				$.getJSON("http://localhost:3000/bla", {}, function(data){
+				$.getJSON("http://localhost:3000/game?gameId=jocke", {}, function(data){
 					console.log(data);
 				}); 
 				var socket = io.connect("http://localhost:3000")
