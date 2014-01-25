@@ -3,7 +3,7 @@ body {
    font-family: sans-serif;
    color: white;
    margin: 0;
-   padding: 0;
+   padding: 5px;
    font: 24px sans-serif;
    text-transform: uppercase;
 }
@@ -87,19 +87,43 @@ button.bad {
    background-color: #F66F4E;
 }
 
-button.edit {
+button.play {
+   background-color: #013B44;
+}
+
+
+div.play,
+.buttons .play {
+   padding: 0;
+   width: auto;
+   position: relative;
+   float: left;
+   width: 49%;
+   height: 110px;
+   box-sizing: border-box;
+   line-height: 110px;
+   background-color: #013B44;
+}
+
+div.play:nth-child(2n),
+.buttons .play:nth-child(2n) {
+   float: right;
+}
+
+div.play button {
+   width: auto;
+   padding: 0;
+   margin: 0;
    position: absolute;
    top: 22px;
    right: 22px;
+   background-color: transparent;
 }
 
-div.play {
-   width: auto;
-   position: relative;
-}
-
-button.play {
-   background-color: #013B44;
+.buttons:after {
+   display: block;
+   clear: both;
+   content: " ";
 }
 
 button.addButton {
