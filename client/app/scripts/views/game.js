@@ -14,55 +14,55 @@ define(['backbone', 'compiled-templates', 'socketio'], function(Backbone, Handle
     },
 
     render: function () {
-      $(this.el).html(new Waiting().render().el);
-      var that = this;
-      socket = io.connect("http://localhost:3000");
-      socket.on('game_started', function (data) {
-        console.log(data);
-        $(that.el).html(new Play().render().el);
-      });
-      return this;
-    }
-  });
+        $(this.el).html(Handlebars.templates.waiting());
+        var that = this;
+        socket = io.connect("http://localhost:3000");
 
-  var Waiting = Backbone.View.extend({
-    render: function () {
-      $(this.el).html(Handlebars.templates.waiting({value:"scoreboard"}));
-      return this;
-    }
-  });
-  var Lose = Backbone.View.extend({
-    render: function () {
-      $(this.el).html(Handlebars.templates.lose({value:"scoreboard"}));
-      return this;
-    }
-  });
-  var Win = Backbone.View.extend({
-    render: function () {
-      $(this.el).html(Handlebars.templates.win({value:"scoreboard"}));
-      return this;
-    }
-  });
-  var Play = Backbone.View.extend({
-    render: function () {
-      console.log("buttons in render:" + this.buttons);
-      $(this.el).html(Handlebars.templates.game_started({value:"scoreboard", buttons:this.buttons}));
-      return this;
+        socket.on('connect',function (data) {
+            console.log("connect");
+            socket.emit('join_game', that.gameId, function(response){ console.log(response)});
+        });
+
+        socket.on('game_started', function (data) {
+            console.log("game_started " + data);
+            that.renderPlay(data);
+        });
+        socket.on('round_ended', function (data) {
+            console.log(data);
+            that.renderWin(data);
+            setTimeout(function() {that.renderPlay();}, 1500);
+
+        });
+        socket.on('round_lost', function (data) {
+            console.log(data);
+            that.renderLose(data);
+            setTimeout(function() {that.renderPlay();}, 1500);
+        });
+        socket.emit("game_joined", {"playerName":this.playerName, "gameId":this.gameId});
+        return this;
     },
+    renderPlay: function (data) {
+        console.log("renderPlay");
+        $(this.el).html(Handlebars.templates.game_started(data));
+        return this;
+    },
+    renderLose: function (data) {
+        console.log("renderLose");
+
+        $(this.el).html(Handlebars.templates.lose(data));
+        return this;
+    },
+    renderWin: function (data) {
+        console.log("renderWin");
+        $(this.el).html(Handlebars.templates.win(data));
+        return this;
+    },
+
     events: {
-    	"click button.play": "onEpic"
+        "click button.play": "onEpic"
     },
-    onEpic: function(event) {
-
-      console.log("pushed button: " + event.target.getAttribute('id'));
-
-    	this.count = this.count || 0;
-    	this.count++;
-    	var view = Win;
-    	if (this.count % 2 == 0) view = Lose;
-    	this.$el.html(new view().render().el);
-    	var that = this;
-    	setTimeout(function() { that.render(); }, 2000)
+    onEpic: function() {
+        socket.emit("button_pushed", {"playerName":this.playerName, "gameId":this.gameId});
     }
   });
 

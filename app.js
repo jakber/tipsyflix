@@ -11,11 +11,21 @@ var server = require("http").createServer(app)
 var io = require("socket.io").listen(server);
 
 io.sockets.on('connection', function (socket) {
-    setTimeout(function() {
-        socket.emit('game_started', { hello: 'world' });
-    }, 2000);
-    socket.on('my other event', function (data) {
+    socket.on('join_game', function (gameId) {
+        socket.set('room', gameId, function() { console.log('room ' + gameId + ' saved'); } );
+        socket.join(gameId);
+    });
+    socket.on('button_pushed', function (data) {
         console.log(data);
+        setTimeout(function() {
+            socket.emit('round_won', { hello: 'world' });
+        }, 2000);
+    });
+    socket.on('game_joined', function (data) {
+        console.log(data);
+        setTimeout(function() {
+            socket.emit('game_started', games[data.gameId]);
+        }, 1000);
     });
 });
 
@@ -231,6 +241,8 @@ app.post("/game/:gameId/button/:buttonId/player/:playerId", function(req, res) {
 
                         console.log("Losers are " + extractNames(losers) + ", Winners are " + extractNames(winners));
 
+                        // Send event to all clients in game
+                        io.sockets.in(gameId).emit("round_ended", {"winners":winners,"losers":losers})
                         delete game.events[buttonId];
 
                 }, 5000);
