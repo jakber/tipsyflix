@@ -1,3 +1,4 @@
+ls
 # Created by http://gitignore.io
 
 ### Node ###
@@ -40,6 +41,3 @@ app/bower_components
 ### Yeoman ###
 dist
 test/temp
-
-### environment configuration ###
-config.js
