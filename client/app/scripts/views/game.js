@@ -41,7 +41,7 @@ var GameView = Backbone.View.extend({
     renderPlay: function () {
         console.log("renderPlay");
         var that = this;
-        $.getJSON("http://localhost:3000/game/" + this.gameId + "/player", {}, function(data) {
+        $.getJSON(config.server + "/game/" + this.gameId + "/player", {}, function(data) {
             var player = _.first(_.filter(data, function(e) { return e.name == that.playerName }));
             var playerScore = player.wins - player.losses;
             that.$el.html(Handlebars.templates.game_started({buttons:that.buttons, score:playerScore}));
@@ -50,17 +50,17 @@ var GameView = Backbone.View.extend({
         return this;
     },
     renderLose: function (data) {
-        console.log("renderLose");
+        console.log("renderLose", data);
         var that = this;
-        var losers = data.losers.filter(function(s) {s != that.playerName});
+        var losers = data.losers.filter(function(s) {return s != that.playerName});
         var message = losers.length > 0 ? "So did " + losers.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
         this.$el.html(Handlebars.templates.lose({message:message}));
         return this;
     },
     renderWin: function (data) {
-        console.log("renderWin");
+        console.log("renderWin", data);
         var that = this;
-        var winners = data.winners.filter(function(s) {s != that.playerName});
+        var winners = data.winners.filter(function(s) {return s != that.playerName});
         var message = winners.length > 0 ? "So did " + winners.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
         this.$el.html(Handlebars.templates.win({message:message}));
         return this;
