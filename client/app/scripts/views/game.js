@@ -51,16 +51,18 @@ var GameView = Backbone.View.extend({
     renderLose: function (data) {
         console.log("renderLose", data);
         var that = this;
-        var losers = data.losers.filter(function(s) {return s != that.playerName});
-        var message = losers.length > 0 ? "So did " + losers.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
+        //var losers = data.losers.filter(function(s) {return s != that.playerName});
+        //var message = losers.length > 0 ? "So did " + losers.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
+        var message = data.voters.join(", ").replace(/, ([^,]*$)/, " and $1") + " thought that was <strong>" + data.button + "</strong>";
         this.$el.html(Handlebars.templates.lose({message:message}));
         return this;
     },
     renderWin: function (data) {
         console.log("renderWin", data);
         var that = this;
-        var winners = data.winners.filter(function(s) {return s != that.playerName});
-        var message = winners.length > 0 ? "So did " + winners.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
+        //var winners = data.winners.filter(function(s) {return s != that.playerName});
+        //var message = winners.length > 0 ? "So did " + winners.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
+        var message = data.voters.join(", ").replace(/, ([^,]*$)/, " and $1") + " thought that was <strong>" + data.button + "</strong>";
         this.$el.html(Handlebars.templates.win({message:message}));
         return this;
     },
