@@ -43,4 +43,4 @@ dist
 test/temp
 
 ### Environment config ###
-client/app/scripts/config.js
+app/scripts/config.js
