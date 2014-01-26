@@ -224,3 +224,7 @@ button.addButton {
 .content.verdict > div {
    margin-top: -200px;
 }
+
+.content.verdict p strong {
+   color: #039986;
+}

@@ -54,7 +54,7 @@ var GameView = Backbone.View.extend({
         var that = this;
         //var losers = data.losers.filter(function(s) {return s != that.playerName});
         //var message = losers.length > 0 ? "So did " + losers.join(", ").replace(/, ([^,]*$)/, " and $1") : "By yourself";
-        var message = data.voters.join(", ").replace(/, ([^,]*$)/, " and $1") + " thought that was <strong>" + data.button + "</strong>";
+        var message = data.voters.join(", ").replace(/, ([^,]*$)/, " and $1") + " <strong>thought that was " + data.button + "</strong>";
         this.$el.html(Handlebars.templates.lose({message:message}));
         return this;
     },
