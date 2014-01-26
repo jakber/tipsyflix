@@ -18,6 +18,10 @@ body {
    line-height: 30px;
 }
 
+.content {
+   position: relative;
+}
+
 h1 {
    font-family: 'Monoton', cursive;
    font-size: 48px;
@@ -65,8 +69,10 @@ a {
 
 input {
    font-size: 36px;
-   width: 98%;
+   width: 100%;
    text-align: center;
+   padding: 0;
+   line-height: 46px;
 }
 
 button, div.play {
@@ -209,8 +215,3 @@ button.addButton {
    background-color: #039986;
 }
 
-.content.verdict {
-   position: relative;
-   top: 50%;
-   transform: translateY(-50%);
-}
