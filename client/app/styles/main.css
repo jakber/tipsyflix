@@ -215,3 +215,12 @@ button.addButton {
    background-color: #039986;
 }
 
+.content.verdict {
+   position: absolute;
+   text-align: center;
+   top: 50%;
+   width: 100%;
+}
+.content.verdict > div {
+   margin-top: -200px;
+}
