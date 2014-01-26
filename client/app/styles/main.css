@@ -212,6 +212,6 @@ button.addButton {
    color: #F66F4E;
 }
 
-button.pressed {
-   background-color: red;
+.play.pressed {
+   background-color: #F66F4E;
 }
