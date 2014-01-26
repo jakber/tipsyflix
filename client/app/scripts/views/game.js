@@ -10,7 +10,6 @@ var GameView = Backbone.View.extend({
     },
 
     render: function () {
-        this.$el.html(Handlebars.templates.waiting());
         var that = this;
         socket = io.connect(config.server);
         socket.on('disconnect', function() { console.log("disconnected")})
@@ -44,7 +43,7 @@ var GameView = Backbone.View.extend({
         $.getJSON(config.server + "/game/" + this.gameId + "/player", {}, function(data) {
             var player = _.first(_.filter(data, function(e) { return e.name == that.playerName }));
             var playerScore = player.wins - player.losses;
-            that.$el.html(Handlebars.templates.game_started({buttons:that.buttons, score:playerScore}));
+            that.$el.html(Handlebars.templates.game_started({buttons:that.buttons, score:playerScore, master: (data[0].name == that.playerName)}));
         });
         
         return this;

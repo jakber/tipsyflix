@@ -3,13 +3,16 @@ define(['backbone', 'compiled-templates', 'config'], function(Backbone, Handleba
   	initialize: function(options) {
   		var that = this;
   		$.getJSON(config.server + "/game/"+options.gameId, {}, function(data){
-			console.log("got scores");
-			that.scores = data;	
-			that.render();
+  			console.log("got scores");
+  			that.scores = data;	
+  			that.render();
 	  	});
   	},
     render: function () {
-      this.$el.html(Handlebars.templates.leaderboard({value:"game", "scores":this.scores}));
+      var scores = (this.scores || {players:[]}).players.sort(function (a,b) {
+        return b.wins - a.wins;
+      });
+      this.$el.html(Handlebars.templates.leaderboard({value:"game", "scores":scores}));
       return this;
     },
     events: {

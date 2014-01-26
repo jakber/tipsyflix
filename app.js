@@ -16,9 +16,7 @@ io.sockets.on('connection', function (socket) {
             console.log('room ' + data.gameId + ' saved');
         });
         socket.join(data.gameId);
-        setTimeout(function() {
-            socket.emit('game_started', games[data.gameId]);
-        }, 1000);
+        socket.emit('game_started', games[data.gameId]);
     });
     socket.on('button_pushed', function (data) {
         console.log(data);
@@ -135,7 +133,14 @@ app.post("/game/:gameId/player", function(req, res) {
         
         var game = games[gameId];
         
-        game.players.push({"name":req.body.name,"id":id++, "wins":0, "losses":0, });
+        var name = req.body.name.trim();
+        var existing = game.players.filter(function (p) {return p.name.toLowerCase() == name.toLowerCase();})[0];
+        console.log("asked to add player " + name + ", existing player matching:");
+        console.log(existing);
+        if (!existing)
+            game.players.push({"name":name,"id":id++, "wins":0, "losses":0, });
+        else
+            console.log("skipping adding player, already exists");
 
         res.json(
                 game
@@ -286,7 +291,7 @@ function handleButtonPushed(gameId, buttonId, playerId) {
                     io.sockets.in(gameId).emit("round_ended", {"winners":extractNames(winners),"losers":extractNames(losers)});
                     delete game.events[buttonId];
 
-            }, 5000);
+            }, 3000);
 
     }
     return game;
