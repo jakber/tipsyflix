@@ -28,7 +28,7 @@ var GameView = Backbone.View.extend({
                 that.renderWin(data);
             else
                 that.renderLose(data);
-            setTimeout(function() {that.renderPlay();}, 1500);
+            setTimeout(function() {that.renderPlay();}, 2000);
 
         });
         socket.on('game_ended', function(data) {
