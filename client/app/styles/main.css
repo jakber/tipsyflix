@@ -13,7 +13,7 @@ body {
    text-align: center;
    width: auto;
    max-width: 800px;
-   font-size: 18px;
+   font-size: 24px;
    font-weight: 200;
    line-height: 30px;
 }
@@ -34,13 +34,6 @@ h2 {
 
 strong {
    color: white;
-}
-
-.browsehappy {
-   margin: 0.2em 0;
-   background: #ccc;
-   color: #000;
-   padding: 0.2em 0;
 }
 
 ul {
@@ -97,29 +90,30 @@ button.play {
    background-color: #013B44;
 }
 
-
 div.play,
 .buttons .play {
    padding: 0;
    width: auto;
    position: relative;
    float: left;
-   width: 49.6%;
+   width: 49.5%;
    height: 110px;
    box-sizing: border-box;
-   line-height: 110px;
    background-color: #013B44;
    margin-bottom: 5px;
    overflow: hidden;
 }
 
+div.play span {
+   position: relative;
+   top: 50%;
+   transform: translateY(-50%);
+   display: block;
+}
+
 div.play:nth-child(2n),
 .buttons .play:nth-child(2n) {
    float: right;
-}
-
-.config div.play:nth-child(3n):last-child {
-   width: 100%;
 }
 
 div.play button {
@@ -152,11 +146,11 @@ button.addButton {
 
 .content.name h2 {
    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 30%;
-    width: 50%;
-    margin: -15% 0 0 -25%;
+   top: 50%;
+   left: 50%;
+   height: 30%;
+   width: 50%;
+   margin: -15% 0 0 -25%;
 }
 
 .controls {
@@ -189,7 +183,6 @@ button.addButton {
    color: #039986;
 }
 
-
 .score table tr td:first-child {
    text-align: left;
    padding-left: 5px;
@@ -213,5 +206,11 @@ button.addButton {
 }
 
 .play.pressed {
-   background-color: #F66F4E;
+   background-color: #039986;
+}
+
+.content.verdict {
+   position: relative;
+   top: 50%;
+   transform: translateY(50%);
 }
