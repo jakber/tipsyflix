@@ -21,9 +21,11 @@ io.sockets.on('connection', function (socket) {
     socket.on('button_pushed', function (data) {
         console.log(data);
         var game = games[data.gameId];
+        if (!game) return;
         var player = _.first(_.filter(game.players, function(player){
             return player.name == data.playerName;
         }));
+        if (!player) return;
         handleButtonPushed(data.gameId, data.buttonId, player.id);
     });
     socket.on('end_game', function (data) {
@@ -132,7 +134,6 @@ app.post("/game/:gameId/player", function(req, res) {
         console.log("create player in game " + gameId);
         
         var game = games[gameId];
-        
         var name = req.body.name.trim();
         var existing = game.players.filter(function (p) {return p.name.toLowerCase() == name.toLowerCase();})[0];
         console.log("asked to add player " + name + ", existing player matching:");
@@ -292,7 +293,7 @@ function handleButtonPushed(gameId, buttonId, playerId) {
                     io.sockets.in(gameId).emit("round_ended", {"winners":extractNames(winners),"losers":extractNames(losers), "button": button.text, "voters": extractNames(votingPlayers)});
                     delete game.events[buttonId];
 
-            }, 3000);
+            }, 2000);
 
     }
     return game;

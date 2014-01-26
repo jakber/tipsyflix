@@ -15,7 +15,7 @@ var GameView = Backbone.View.extend({
         socket.on('disconnect', function() { console.log("disconnected")})
         socket.on('connect',function (data) {
             console.log("connect for gameId " + that.gameId);
-            socket.emit('join_game', {gameId: that.gameId}, function(response){ console.log(response)});
+            socket.emit('join_game', {gameId: that.gameId, playerName: that.playerName}, function(response){ console.log(response)});
         });
         socket.on('game_started', function (data) {
             console.log("game_started " ,data);
